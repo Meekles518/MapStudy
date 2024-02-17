@@ -10,7 +10,7 @@ using UnityEngine.UI;
 namespace Map
 {
     //Node Class를 정의
-    public class Node : MonoBehaviour
+    public class Node : MonoBehaviour,  IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
         public Point point; //Node의 좌표값을 저장할 Point 형 변수
         public List<Node> connected; //이 Node와 연결된 다른 Node의 좌표를 저장할 List
@@ -168,23 +168,25 @@ namespace Map
 
 
 
-        public void OnMouseEnter() //마우스가 올라갔을 때 
+        public void OnPointerEnter(PointerEventData data) //마우스가 올라갔을 때 
         {
             transform.localScale = new Vector3(mouseOnScale, mouseOnScale, 1f); //Scale 1.3배 하기
+            Debug.Log("onenter");
 
         }//OnMouseEnter
 
 
-        public void OnMouseExit()
+        public void OnPointerExit(PointerEventData data)
         {
             transform.localScale = new Vector3(1f, 1f, 1f);//Scale 1배로 되돌리기
+            Debug.Log("onexit");
         }//OnMouseExit
 
         
         
 
 
-        public void OnMouseUpAsButton() //한 오브젝트 위에서 마우스 다운과 업이 일어났을 때
+        public void OnPointerClick(PointerEventData data) //한 오브젝트 위에서 마우스 다운과 업이 일어났을 때
         {
 
             //playerNode의 connected 리스트에, 클릭한 Node가 존재한다면
@@ -199,6 +201,7 @@ namespace Map
                 setColor(); //색 변경
 
                 MapManager.instance.playerNode = this;
+                Debug.Log("onclick");
             }
 
             else
